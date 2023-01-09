@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddSong({ songs, onSubmit }) {
+function AddSong({ onSubmit }) {
   const [inputData, setInputData] = useState({
     id: "",
     title: "",
@@ -13,7 +13,6 @@ function AddSong({ songs, onSubmit }) {
     const { name, value } = event.target;
     setInputData((prevInputData) => ({
       ...prevInputData,
-      id: songs.length + 1,
       [name]: value,
     }));
   }
