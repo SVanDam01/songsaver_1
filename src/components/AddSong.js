@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function AddSong({ onSubmit }) {
   const [inputData, setInputData] = useState({
     id: "",
-    title: "",
+    song: "",
     artist: "",
     genre: "",
     rating: "",
@@ -20,7 +20,7 @@ function AddSong({ onSubmit }) {
   function onButtonPress(event) {
     event.preventDefault();
     if (
-      inputData.title === "" ||
+      inputData.song === "" ||
       inputData.artist === "" ||
       inputData.genre === "" ||
       inputData.rating === ""
@@ -30,7 +30,7 @@ function AddSong({ onSubmit }) {
       onSubmit(inputData);
       setInputData({
         id: "",
-        title: "",
+        song: "",
         artist: "",
         genre: "",
         rating: "",
@@ -43,9 +43,9 @@ function AddSong({ onSubmit }) {
       <form className="input-bar">
         <input
           type="text"
-          name="title"
+          name="song"
           placeholder="Title of the song"
-          value={inputData.title}
+          value={inputData.song}
           onChange={handleChange}
         />
         <input

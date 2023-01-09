@@ -21,11 +21,11 @@ function Container() {
     const songsCopy = [...songs];
     songsCopy.sort((songA, songB) => {
       switch (columnName) {
-        case "title":
+        case "song":
           if (sorted.reversed) {
-            return songB.title.localeCompare(songA.title);
+            return songB.song.localeCompare(songA.song);
           }
-          return songA.title.localeCompare(songB.title);
+          return songA.song.localeCompare(songB.song);
         case "artist":
           if (sorted.reversed) {
             return songB.artist.localeCompare(songA.artist);
