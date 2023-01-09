@@ -1,4 +1,4 @@
-function SongOverview({ songs, sortByTitle, arrowsTable }) {
+function SongOverview({ songs, sortByTitle, sorted }) {
   const songList = songs.map((song) => (
     <tr key={song.id} className="song__list">
       <td className="song__item">{song.title} </td>
@@ -20,7 +20,7 @@ function SongOverview({ songs, sortByTitle, arrowsTable }) {
                 onClick={sortByTitle}
                 className="sort-button"
               >
-                {arrowsTable.title}
+                {sorted.name === "title" ? sorted.arrow : "-"}
               </button>
             </th>
             <th className="song-header__item">
@@ -30,7 +30,7 @@ function SongOverview({ songs, sortByTitle, arrowsTable }) {
                 onClick={sortByTitle}
                 className="sort-button"
               >
-                {arrowsTable.artist}
+                {sorted.name === "artist" ? sorted.arrow : "-"}
               </button>
             </th>
             <th className="song-header__item">
@@ -40,7 +40,7 @@ function SongOverview({ songs, sortByTitle, arrowsTable }) {
                 onClick={sortByTitle}
                 className="sort-button"
               >
-                {arrowsTable.genre}
+                {sorted.name === "genre" ? sorted.arrow : "-"}
               </button>
             </th>
             <th className="song-header__item">
@@ -50,7 +50,7 @@ function SongOverview({ songs, sortByTitle, arrowsTable }) {
                 onClick={sortByTitle}
                 className="sort-button"
               >
-                {arrowsTable.rating}
+                {sorted.name === "rating" ? sorted.arrow : "-"}
               </button>
             </th>
           </tr>

@@ -1,50 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AddSong from "./AddSong.js";
 import SongOverview from "./SongOverview.js";
 import Header from "./Header.js";
 
 function Container() {
   const [songs, setSongs] = useState([]);
-  const [sorted, setSorted] = useState({ sorted: "default", reversed: false });
-  const [arrowsTable, setArrowsTable] = useState({
-    title: "-",
-    artist: "-",
-    genre: "-",
-    rating: "-",
+  const [sorted, setSorted] = useState({
+    name: "id",
+    arrow: "-",
+    reversed: false,
   });
-
-  useEffect(() => {
-    switch (sorted.sorted) {
-      case "title":
-        if (sorted.reversed) {
-          setArrowsTable({ title: "↓", artist: "-", genre: "-", rating: "-" });
-        } else {
-          setArrowsTable({ title: "↑", artist: "-", genre: "-", rating: "-" });
-        }
-        break;
-      case "artist":
-        if (sorted.reversed) {
-          setArrowsTable({ title: "-", artist: "↑", genre: "-", rating: "-" });
-        } else {
-          setArrowsTable({ title: "-", artist: "↓", genre: "-", rating: "-" });
-        }
-        break;
-      case "genre":
-        if (sorted.reversed) {
-          setArrowsTable({ title: "-", artist: "-", genre: "↑", rating: "-" });
-        } else {
-          setArrowsTable({ title: "-", artist: "-", genre: "↓", rating: "-" });
-        }
-        break;
-      case "rating":
-        if (sorted.reversed) {
-          setArrowsTable({ title: "-", artist: "-", genre: "-", rating: "↑" });
-        } else {
-          setArrowsTable({ title: "-", artist: "-", genre: "-", rating: "↓" });
-        }
-        break;
-    }
-  }, [sorted]);
 
   function onSubmit(inputData) {
     const newInputData = { ...inputData, id: songs.length + 1 };
@@ -52,10 +17,10 @@ function Container() {
   }
 
   function sortByTitle(event) {
-    const name = event.target.getAttribute("name");
+    const columnName = event.target.getAttribute("name");
     const songsCopy = [...songs];
     songsCopy.sort((songA, songB) => {
-      switch (name) {
+      switch (columnName) {
         case "title":
           if (sorted.reversed) {
             return songB.title.localeCompare(songA.title);
@@ -76,10 +41,29 @@ function Container() {
             return songB.rating.localeCompare(songA.rating);
           }
           return songA.rating.localeCompare(songB.rating);
+        default:
       }
     });
     setSongs(songsCopy);
-    setSorted({ sorted: name, reversed: !sorted.reversed });
+    defaultReversed(columnName);
+  }
+
+  function defaultReversed(columnName) {
+    const name = columnName;
+    if (name === sorted.name) {
+      setArrow(name);
+    } else {
+      setSorted({ name: name, arrow: "-", reversed: false });
+      setArrow(name);
+    }
+  }
+
+  function setArrow(name) {
+    if (sorted.reversed) {
+      setSorted({ name: name, arrow: "↑", reversed: !sorted.reversed });
+    } else {
+      setSorted({ name: name, arrow: "↓", reversed: !sorted.reversed });
+    }
   }
 
   return (
@@ -89,11 +73,7 @@ function Container() {
       </header>
       <main>
         <AddSong onSubmit={onSubmit} />
-        <SongOverview
-          songs={songs}
-          sortByTitle={sortByTitle}
-          arrowsTable={arrowsTable}
-        />
+        <SongOverview songs={songs} sortByTitle={sortByTitle} sorted={sorted} />
       </main>
     </div>
   );
