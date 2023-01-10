@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 function AddSong({ onSubmit }) {
+  // ** SET STATE FOR INPUT SONG ** //
   const [inputData, setInputData] = useState({
     id: "",
     song: "",
@@ -9,6 +10,7 @@ function AddSong({ onSubmit }) {
     rating: "",
   });
 
+  // ** SET FUNCTION FOR COLLECT ALL INPUTFIELDS OF THE SONG ** //
   function handleChange(event) {
     const { name, value } = event.target;
     setInputData((prevInputData) => ({
@@ -17,6 +19,7 @@ function AddSong({ onSubmit }) {
     }));
   }
 
+  // ** SET FUNCTION FOR CHECKING ALL INPUTFIELDS FOR INPUT, SUBMIT THE INPUT & RESET STATE OF THE INPUT ** //
   function onButtonPress(event) {
     event.preventDefault();
     if (
@@ -39,6 +42,7 @@ function AddSong({ onSubmit }) {
   }
 
   return (
+    // ** SET INPUTFIELDS ** //
     <div>
       <form className="input-bar">
         <input
