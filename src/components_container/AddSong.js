@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 
 function AddSong({ onSubmit }) {
+  // ** SET STATE FOR INPUT SONG ** //
   const [inputData, setInputData] = useState({
     id: "",
-    title: "",
+    song: "",
     artist: "",
     genre: "",
     rating: "",
   });
 
+  // ** SET FUNCTION FOR COLLECT ALL INPUTFIELDS OF THE SONG ** //
   function handleChange(event) {
     const { name, value } = event.target;
     setInputData((prevInputData) => ({
@@ -17,10 +19,11 @@ function AddSong({ onSubmit }) {
     }));
   }
 
+  // ** SET FUNCTION FOR CHECKING ALL INPUTFIELDS FOR INPUT, SUBMIT THE INPUT & RESET STATE OF THE INPUT ** //
   function onButtonPress(event) {
     event.preventDefault();
     if (
-      inputData.title === "" ||
+      inputData.song === "" ||
       inputData.artist === "" ||
       inputData.genre === "" ||
       inputData.rating === ""
@@ -30,7 +33,7 @@ function AddSong({ onSubmit }) {
       onSubmit(inputData);
       setInputData({
         id: "",
-        title: "",
+        song: "",
         artist: "",
         genre: "",
         rating: "",
@@ -39,13 +42,14 @@ function AddSong({ onSubmit }) {
   }
 
   return (
+    // ** SET INPUTFIELDS ** //
     <div>
       <form className="input-bar">
         <input
           type="text"
-          name="title"
+          name="song"
           placeholder="Title of the song"
-          value={inputData.title}
+          value={inputData.song}
           onChange={handleChange}
         />
         <input

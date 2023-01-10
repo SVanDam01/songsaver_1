@@ -29,13 +29,15 @@ select {
   font: inherit;
 }
 
-/* Algemene instellingen */
+/* Set root */
 
 :root {
   --color-theme: rgb(0, 0, 128);
   --color-ligt: white;
   --color-bg: rgb(247, 247, 247);
   --color-btn: rgb(0, 0, 128);
+  --color-navbar: #333;
+  --color-table: #333;
 
   background-color: var(--color-bg);
   color: var(--color-dark);
@@ -67,6 +69,33 @@ select {
   cursor: pointer;
 }
 
+/* Navbar */
+
+.flex {
+  display: flex;
+  list-style-type: none;
+  margin-bottom: 1rem;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--color-navbar);
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.active {
+  background-color: var(--color-theme);
+}
+
 /* Setup Table */
 
 table {
@@ -75,7 +104,7 @@ table {
 }
 
 .song-header {
-  background-color: var(--color-theme);
+  background-color: var(--color-table);
   color: var(--color-ligt);
 }
 
