@@ -21,8 +21,13 @@ function Container({ songs, setSongs }) {
   // ** SET FUNCTION FOR ADDING SONG ** //
   function onSubmit(inputData) {
     const newInputData = { ...inputData, id: nanoid() };
-    const newSongs = [...songs].concat(newInputData);
+    let newSongs = [...songs].concat(newInputData);
     setSongs(newSongs);
+
+    if (filter) {
+      newSongs = [...filteredSongs].concat(newInputData);
+      setFilteredSongs(newSongs);
+    }
   }
 
   // ** SET FUNCTION FOR SORTING CLICKED COLUMN ** //
