@@ -1,24 +1,50 @@
-function SongOverview({ songs, sortByTitle, sorted }) {
+function SongOverview({
+  songs,
+  filteredSongs,
+  filter,
+  sortColumn,
+  sorted,
+  handleDelete,
+}) {
   // ** SET HEADERNAMES ** //
-  const headers = ["song", "artist", "genre", "rating"];
+  const headers = ["Song", "Artist", "Genre", "Rating", "Delete"];
 
   // ** SET HEADERNAMES FOR EACH COLUMN ** //
   const headerList = headers.map((header) => (
     <th key={header.toString()} className="song-header__item">
       {header}
-      <button name={header} onClick={sortByTitle} className="sort-button">
-        {sorted.name === header ? sorted.arrow : "-"}
+      <button
+        name={header.toLowerCase()}
+        onClick={sortColumn}
+        className="sort-button"
+      >
+        {sorted.name === header.toLowerCase() ? sorted.arrow : "-"}
       </button>
     </th>
   ));
 
   // ** SET SONGS FOR EACH ROW ** //
-  const songList = songs.map((song) => (
+  let songitems = songs;
+  if (filter) {
+    songitems = filteredSongs;
+  }
+
+  const songList = songitems.map((song) => (
     <tr key={song.id} className="song__list">
       <td className="song__item">{song.song} </td>
       <td className="song__item">{song.artist} </td>
       <td className="song__item">{song.genre} </td>
       <td className="song__item">{song.rating} </td>
+      <td className="flex-del">
+        <button
+          onClick={() => handleDelete(song.id, song.genre)}
+          name="delete"
+          type="button"
+          id="delButton"
+        >
+          delete
+        </button>
+      </td>
     </tr>
   ));
 

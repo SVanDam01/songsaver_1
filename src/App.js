@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Container from "./pages/Container.js";
+
 import { Route, Routes, NavLink } from "react-router-dom";
 import About from "./pages/About.js";
 import NotFound from "./pages/NotFound.js";
@@ -7,11 +8,6 @@ import NotFound from "./pages/NotFound.js";
 function App() {
   // ** SETSTATE HERE TO PREFEND LOSING STATE WHEN NAVIGATE ** //
   const [songs, setSongs] = useState([]);
-
-  function onSubmit(inputData) {
-    const newInputData = { ...inputData, id: songs.length + 1 };
-    setSongs((prevSongs) => [...prevSongs, newInputData]);
-  }
 
   return (
     // ** SETUP NAVBAR & ROUTE ** //
@@ -29,9 +25,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <Container songs={songs} setSongs={setSongs} onSubmit={onSubmit} />
-          }
+          element={<Container songs={songs} setSongs={setSongs} />}
         />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddSong({ onSubmit }) {
+function AddSong({ onSubmit, handleFilter }) {
   // ** SET STATE FOR INPUT SONG ** //
   const [inputData, setInputData] = useState({
     id: "",
@@ -8,7 +8,11 @@ function AddSong({ onSubmit }) {
     artist: "",
     genre: "",
     rating: "",
+    delete: "delete",
   });
+
+  // ** SET STATE FOR FILTER SONG ** //
+  const [filterGenre, setFilterGenre] = useState("");
 
   // ** SET FUNCTION FOR COLLECT ALL INPUTFIELDS OF THE SONG ** //
   function handleChange(event) {
@@ -37,8 +41,22 @@ function AddSong({ onSubmit }) {
         artist: "",
         genre: "",
         rating: "",
+        delete: "delete",
       });
     }
+  }
+
+  // ** SET FUNCTION FOR SUBMITING FILTER  ** //
+  function inputFilter(event) {
+    event.preventDefault();
+    const filter = event.target.value;
+    handleFilter(filter);
+    setFilterGenre(filter);
+  }
+
+  function handleReset() {
+    handleFilter("");
+    setFilterGenre("");
   }
 
   return (
@@ -84,10 +102,28 @@ function AddSong({ onSubmit }) {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <button id="addButton" onClick={onButtonPress}>
+        <button type="button" id="addButton" onClick={onButtonPress}>
           Add song
         </button>
       </form>
+      <div className="filterFunction">
+        <label name="filter">Filter genre:</label>
+        <select
+          value={filterGenre}
+          name="filter"
+          id="filter"
+          onChange={inputFilter}
+        >
+          <option value="">filter a genre</option>
+          <option value="rock">Rock</option>
+          <option value="jazz">Jazz</option>
+          <option value="pop">Pop</option>
+          <option value="dance">Dance</option>
+        </select>
+        <button type="button" id="addButton" onClick={handleReset}>
+          Reset filter
+        </button>
+      </div>
     </div>
   );
 }
