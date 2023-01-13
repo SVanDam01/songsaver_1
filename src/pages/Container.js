@@ -33,7 +33,7 @@ function Container({ songs, setSongs }) {
   // ** SET FUNCTION FOR ADDING SONG ** //
   function onSubmit(inputData) {
     const newInputData = { ...inputData, id: nanoid() };
-    let newSongs = [...songs].concat(newInputData);
+    const newSongs = [...songs, newInputData];
     setSongs(newSongs);
   }
 
@@ -74,11 +74,7 @@ function Container({ songs, setSongs }) {
 
   // ** SET FUNCTION FOR FILTER GENRE ** //
   function handleFilter(genre) {
-    if (genre === "") {
-      setFilteredGenre(genre);
-    } else {
-      setFilteredGenre(genre);
-    }
+    setFilteredGenre(genre);
     setSorted({ name: "", arrow: "-", reversed: false });
   }
 
