@@ -1,11 +1,4 @@
-function SongOverview({
-  songs,
-  filteredSongs,
-  filter,
-  sortColumn,
-  sorted,
-  handleDelete,
-}) {
+function SongOverview({ displaySongs, sortColumn, sorted, handleDelete }) {
   // ** SET HEADERNAMES ** //
   const headers = ["Song", "Artist", "Genre", "Rating", "Delete"];
 
@@ -24,12 +17,7 @@ function SongOverview({
   ));
 
   // ** SET SONGS FOR EACH ROW ** //
-  let songitems = songs;
-  if (filter) {
-    songitems = filteredSongs;
-  }
-
-  const songList = songitems.map((song) => (
+  const songList = displaySongs.map((song) => (
     <tr key={song.id} className="song__list">
       <td className="song__item">{song.song} </td>
       <td className="song__item">{song.artist} </td>

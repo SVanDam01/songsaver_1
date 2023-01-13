@@ -12,48 +12,35 @@ function Container({ songs, setSongs }) {
     reversed: false,
   });
 
-  // ** SET STATE FOR FILTERED SONGS ** //
-  const [filteredSongs, setFilteredSongs] = useState([]);
+  // // ** SET STATE FOR FILTERED & SORTING SONGS ** //
+  const [filterGenre, setFilteredGenre] = useState("");
+  const [columnName, setcolumnName] = useState("id");
 
-  // ** SET STATE FOR FILTER STATE ** //
-  const [filter, setFilter] = useState(false);
+  const filteredSongs = songs.filter((song) => {
+    if (filterGenre === "") {
+      return songs;
+    }
+    return song.genre === filterGenre;
+  });
+
+  const displaySongs = filteredSongs.sort((songA, songB) => {
+    if (sorted.reversed) {
+      return songB[columnName].localeCompare(songA[columnName]);
+    }
+    return songA[columnName].localeCompare(songB[columnName]);
+  });
 
   // ** SET FUNCTION FOR ADDING SONG ** //
   function onSubmit(inputData) {
     const newInputData = { ...inputData, id: nanoid() };
     let newSongs = [...songs].concat(newInputData);
     setSongs(newSongs);
-
-    if (filter) {
-      newSongs = [...filteredSongs].concat(newInputData);
-      setFilteredSongs(newSongs);
-    }
   }
 
   // ** SET FUNCTION FOR SORTING CLICKED COLUMN ** //
   function sortColumn(event) {
     const columnName = event.target.getAttribute("name").toLowerCase();
-    let songsCopy = [...songs];
-
-    if (filter) {
-      songsCopy = [...filteredSongs];
-    }
-
-    songsCopy.sort((songA, songB) => {
-      if (sorted.reversed) {
-        return songB[columnName].localeCompare(songA[columnName]);
-      }
-      return songA[columnName].localeCompare(songB[columnName]);
-    });
-
-    function sortingSongs(songsCopy) {
-      if (filter) {
-        setFilteredSongs(songsCopy);
-      } else {
-        setSongs(songsCopy);
-      }
-    }
-    sortingSongs(songsCopy);
+    setcolumnName(columnName);
     defaultReversed(columnName);
   }
 
@@ -78,34 +65,20 @@ function Container({ songs, setSongs }) {
   }
 
   // ** SET FUNCTION FOR DELETING SONG ** //
-  function handleDelete(songid, genre) {
+  function handleDelete(songid) {
     const newSongs = [...songs];
     const index = newSongs.findIndex((song) => song.id === songid);
     newSongs.splice(index, 1);
     setSongs(newSongs);
-
-    if (filter) {
-      const newSongs = [...filteredSongs];
-      const index = newSongs.findIndex((song) => song.id === songid);
-      newSongs.splice(index, 1);
-      setFilteredSongs(newSongs);
-    }
   }
 
   // ** SET FUNCTION FOR FILTER GENRE ** //
   function handleFilter(genre) {
-    let filterSongs = [...songs];
     if (genre === "") {
-      setFilter(false);
-      setSorted({ name: "", arrow: "-", reversed: false });
+      setFilteredGenre(genre);
     } else {
-      const copieSongs = [...songs];
-      filterSongs = copieSongs.filter((song) => {
-        return song.genre === genre;
-      });
-      setFilter(true);
+      setFilteredGenre(genre);
     }
-    setFilteredSongs(filterSongs);
     setSorted({ name: "", arrow: "-", reversed: false });
   }
 
@@ -117,9 +90,7 @@ function Container({ songs, setSongs }) {
       <main>
         <AddSong onSubmit={onSubmit} handleFilter={handleFilter} />
         <SongOverview
-          songs={songs}
-          filteredSongs={filteredSongs}
-          filter={filter}
+          displaySongs={displaySongs}
           sortColumn={sortColumn}
           sorted={sorted}
           handleDelete={handleDelete}
